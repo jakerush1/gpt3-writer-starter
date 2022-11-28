@@ -38,8 +38,6 @@ Jinx: I'm going to try and take over the world! P.S. I'm going to start by takin
 
 Me:`;
 const generateAction = async (req, res) => {
-  console.log(`API: ${basePromptPrefix}${req.body.userInput}`);
-
   const baseCompletion = await openai.createCompletion({
     model: "text-davinci-002",
     prompt: `${basePromptPrefix}${req.body.userInput}`,
@@ -49,7 +47,6 @@ const generateAction = async (req, res) => {
 
   const basePromptOutput = baseCompletion.data.choices.pop();
 
-  // I build Prompt #2.
   const secondPrompt = `
     Take the response from Jinx below and generate a Letter post written in the style of crazy 16 year old girl and the philosophy of The Joker. Don't mention the Joker. Make it feel like a story. Don't just list the points. Go deep into each one. Explain why.
   
@@ -60,20 +57,15 @@ const generateAction = async (req, res) => {
     Letter from Jinx:
     `;
 
-  // I call the OpenAI API a second time with Prompt #2
   const secondPromptCompletion = await openai.createCompletion({
     model: "text-davinci-002",
     prompt: `${secondPrompt}`,
-    // I set a higher temperature for this one. Up to you!
     temperature: 0.85,
-    // I also increase max_tokens.
-    max_tokens: 1250,
+    max_tokens: 550,
   });
 
-  // Get the output
   const secondPromptOutput = secondPromptCompletion.data.choices.pop();
 
-  // Send over the Prompt #2's output to our UI instead of Prompt #1's.
   res.status(200).json({ output: secondPromptOutput });
 };
 
