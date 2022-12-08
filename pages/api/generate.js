@@ -7,7 +7,6 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 const basePromptPrefix = `
 Write a letter from Jinx. At the end of the letter, include a crazy P.S. line that eludes to the upcoming chaos of the future. Make the letter include some lines of dialog from Netflix's Arcane TV Show.
-
 Jinx: a 26 year-old girl that lives to wreak havoc without care for the consequences is writing from Zaun.
 A Few Lines of Dialog from Jinx: 
 - "I Feel Like You & I Got Off On The Wrong Arm. Maybe We Should Try The Other."
@@ -39,7 +38,7 @@ Jinx: I'm going to try and take over the world! P.S. I'm going to start by takin
 Me:`;
 const generateAction = async (req, res) => {
   const baseCompletion = await openai.createCompletion({
-    model: "text-davinci-002",
+    model: "text-davinci-003",
     prompt: `${basePromptPrefix}${req.body.userInput}`,
     temperature: 0.8,
     max_tokens: 250,
