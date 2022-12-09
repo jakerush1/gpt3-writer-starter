@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@banana-dev/banana-dev": "^4.0.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "eslint": "8.27.0",
