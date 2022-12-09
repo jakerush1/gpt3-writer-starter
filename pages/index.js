@@ -39,7 +39,7 @@ const Home = () => {
   };
 
   const callWhisperEndpoint = async () => {
-    isTranscribing(true);
+    setIsTranscribing(true);
     const fileInput = document.getElementById("file-upload");
     const audioFile = fileInput.files[0];
     console.log("audio", audioFile);
@@ -59,7 +59,7 @@ const Home = () => {
 
     const data = await response.json();
     const { output } = data;
-    console.log("OpenAI replied...", output);
+    console.log("Whisper replied...", output);
 
     setWhisperApiOutput(`${output}`);
     setIsTranscribing(false);
@@ -103,7 +103,11 @@ const Home = () => {
             onClick={callWhisperEndpoint}
           >
             <div className="generate">
-              {isGenerating ? <span class="loader"></span> : <p>Transcribe</p>}
+              {isTranscribing ? (
+                <span class="loader"></span>
+              ) : (
+                <p>Transcribe</p>
+              )}
             </div>
           </a>
         </div>
