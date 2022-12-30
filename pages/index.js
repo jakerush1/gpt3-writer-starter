@@ -3,14 +3,6 @@ import Image from "next/image";
 import buildspaceLogo from "../assets/buildspace-logo.png";
 import { useState } from "react";
 
-const toBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-
 const Home = () => {
   const [userInput, setUserInput] = useState("");
   const [apiOutput, setApiOutput] = useState("");
@@ -41,22 +33,15 @@ const Home = () => {
   const callWhisperEndpoint = async () => {
     setIsTranscribing(true);
     const fileInput = document.getElementById("file-upload");
-    const audioFile = fileInput.files[0];
-    console.log("audio", audioFile);
-    const base64data = await toBase64(audioFile);
-    console.log("base64data", base64data);
-    const base64String = base64data.split(",")[1];
-    console.log("base64String", base64String);
+    const formData = new FormData();
+    const file = fileInput.files[0];
+    await formData.append("audio-file", file);
 
-    console.log("Calling Replicate...");
-    const response = await fetch("/api/transcribe", {
+    console.log("Calling Whisper...", formData);
+    const response = await fetch("/api/whisper", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ audio: base64String }),
+      body: formData,
     });
-
     const data = await response.json();
     const { output } = data;
     console.log("Whisper replied...", output);
@@ -72,7 +57,9 @@ const Home = () => {
   return (
     <div className="root">
       <Head>
-        <title>Creative AI | Your home for AI generated creatives</title>
+        <title>
+          Audio to Email | Generate newsletters from your podcasts with AI
+        </title>
       </Head>
       <div className="container">
         <div className="header">
@@ -80,7 +67,7 @@ const Home = () => {
             <h1>Audio to Email</h1>
           </div>
           <div className="header-subtitle">
-            <h2>Generate newsletters from your podcasts</h2>
+            <h2>Generate newsletters from your podcasts with AI</h2>
           </div>
         </div>
         <div className="upload-container">
