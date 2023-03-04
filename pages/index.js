@@ -24,7 +24,7 @@ const Home = () => {
     const { output } = data;
     console.log("OpenAI replied...", output.text);
 
-    setApiOutput(`${output.text}`);
+    setApiOutput(`${output.message.content}`);
     setIsGenerating(false);
   };
 
@@ -35,20 +35,20 @@ const Home = () => {
   return (
     <div className="root">
       <Head>
-        <title>Creative AI | Your home for AI generated creatives</title>
+        <title>Jinx GPT | Chat with Jinx from League of Legends</title>
       </Head>
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>Letters from Zaun</h1>
+            <h1>Jinx GPT</h1>
           </div>
           <div className="header-subtitle">
-            <h2>What will happen in the Aftermath of Arcane?</h2>
+            <h2>Chat with Jinx from League of Legends</h2>
           </div>
         </div>
         <div className="prompt-container">
           <textarea
-            placeholder="start typing here"
+            placeholder="Hi Jinx, How's life lately?"
             className="prompt-box"
             value={userInput}
             onChange={onUserChangedText}
@@ -62,7 +62,7 @@ const Home = () => {
             onClick={callGenerateEndpoint}
           >
             <div className="generate">
-              {isGenerating ? <span class="loader"></span> : <p>Generate</p>}
+              {isGenerating ? <span class="loader"></span> : <p>Submit</p>}
             </div>
           </a>
         </div>
@@ -70,7 +70,7 @@ const Home = () => {
           <div className="output">
             <div className="output-header-container">
               <div className="output-header">
-                <h3>Output</h3>
+                <h3>Jinx:</h3>
               </div>
             </div>
             <div className="output-content">
@@ -78,18 +78,6 @@ const Home = () => {
             </div>
           </div>
         )}
-      </div>
-      <div className="badge-container grow">
-        <a
-          href="https://buildspace.so/builds/ai-writer"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <div className="badge">
-            <Image src={buildspaceLogo} alt="buildspace logo" />
-            <p>build with buildspace</p>
-          </div>
-        </a>
       </div>
     </div>
   );
